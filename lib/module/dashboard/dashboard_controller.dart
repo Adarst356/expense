@@ -1,0 +1,26 @@
+import 'package:expense/module/dashboard/budget/budget_planner_screen.dart';
+import 'package:expense/module/dashboard/expense/add_expense_screen.dart';
+import 'package:expense/module/dashboard/setting/setting_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'history/expense_history.dart';
+import 'home/home_screen.dart';
+
+class DashboardController extends GetxController with WidgetsBindingObserver {
+  var currentIndex = 0.obs;
+  var selectedTab = 0.obs;
+
+  final List<Widget> pages = [
+    HomeScreen(),
+    ExpenseHistory(),
+    AddExpenseScreen(),
+    BudgetPlannerScreen(),
+    SettingScreen(),
+  ];
+
+  void changeIndex(int index) {
+    currentIndex.value = index;
+  }
+
+}
