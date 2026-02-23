@@ -13,9 +13,9 @@ class DashboardController extends GetxController with WidgetsBindingObserver {
 
   final List<Widget> pages = [
     HomeScreen(),
-    ExpenseHistory(),
-    AddExpenseScreen(),
     BudgetPlannerScreen(),
+    AddExpenseScreen(),
+    ExpenseHistory(),
     SettingScreen(),
   ];
 
