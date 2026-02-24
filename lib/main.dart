@@ -1,3 +1,5 @@
+import 'package:expense/routes/app_pages.dart';
+import 'package:expense/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +18,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Expense',
-      home:LoginScreen()
+      getPages: AppPages.pages,
+      initialRoute: AppRoutes.splashScreen,
+
     );
   }
 }

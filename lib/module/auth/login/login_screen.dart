@@ -1,3 +1,4 @@
+import 'package:expense/routes/app_routes.dart';
 import 'package:expense/utils/spacing.dart';
 import 'package:expense/widgets/app_button.dart';
 import 'package:expense/widgets/app_textfield.dart';
@@ -7,10 +8,9 @@ import 'package:get/get.dart';
 import '../../../utils/extensions.dart';
 import 'login_controller.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends GetView<LoginController> {
+  const LoginScreen({super.key});
 
-  final controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,12 @@ class LoginScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center, // 👈 center align
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: context.colorScheme.primaryContainer, // 👈 theme color
+                  color: context.colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -96,9 +96,12 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: AppButton(
-                  text: "Log In",
-                  onPressed: () {},
-                ),
+                  text: "Login",
+                  onPressed: () {
+                    Get.offAllNamed(AppRoutes.dashboard);
+                  },
+
+              ),
               ),
 
               Spacing.h16,
@@ -138,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                   Spacing.w4,
                   GestureDetector(
                     onTap: () {
-                      // navigate to signup
+                      Get.toNamed(AppRoutes.signupScreen);
                     },
                     child: Text(
                       "Sign Up",
