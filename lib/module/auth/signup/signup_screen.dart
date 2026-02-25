@@ -132,13 +132,19 @@ class SignupScreen extends GetView<SignupController> {
                       text: 'Already have an account? ',
                       style: TextStyle(color: Colors.black54, fontSize: 14),
                       children: [
-                        TextSpan(
-                          text: 'Log In',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        WidgetSpan(
+                            child: GestureDetector(
+                              onTap: (){
+                                Get.back();
+                              },
+                              child: Text(
+                                'Log In',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),)
                       ],
                     ),
                   ),
