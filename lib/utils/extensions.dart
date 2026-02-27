@@ -71,10 +71,6 @@ extension LaunchExtensions on String {
 }*/
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
-
-
-
-
 extension ContextExtensions on BuildContext {
   ColorScheme get colorScheme => theme.colorScheme;
   TextTheme get textStyle => theme.textTheme;

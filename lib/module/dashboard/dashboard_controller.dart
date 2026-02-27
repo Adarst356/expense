@@ -10,7 +10,11 @@ import 'home/home_screen.dart';
 class DashboardController extends GetxController with WidgetsBindingObserver {
   var currentIndex = 0.obs;
   var selectedTab = 0.obs;
+  final selectedIndex = 0.obs; // 0=DAY, 1=WEEK, 2=MONTH
 
+  void select(int index) {
+    selectedIndex.value = index;
+  }
   final List<Widget> pages = [
     HomeScreen(),
     BudgetPlannerScreen(),

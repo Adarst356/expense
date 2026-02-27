@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.3
   connectivity_plus: ^7.0.0
+  fl_chart: ^1.1.1
+  flutter_sales_graph: ^0.0.2
 
 dev_dependencies:
   flutter_test:
