@@ -6,41 +6,51 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends GetView<DashboardController> {
-   HomeScreen({super.key});
+  HomeScreen({super.key});
+
   final transactions = <Map<String, dynamic>>[
     {
-      'title': 'Add Income',
-      'title1': 'Food',
+      'title': 'Monthly Rent',
+      'title1': 'Housing',
       'amount': '\$2000',
-      'icon': Icons.lunch_dining,
+      'icon': Icons.home,
       'bgColor': Colors.green,
       'time': 'Today 09:41 AM',
     },
     {
-      'title': 'Expense',
-      'title1': 'Travel',
-      'amount': '\$750',
-      'icon': Icons.directions_bus,
+      'title': 'Starbucks Coffee',
+      'title1': 'Food',
+      'amount': '\$-5.0',
+      'icon': Icons.local_cafe,
       'bgColor': Colors.red,
       'time': 'Today 10:20 AM',
     },
     {
-      'title': 'Add Income',
+      'title': 'Apple Store',
+      'title1': 'Tech',
+      'amount': '\$-120:00',
+      'icon': Icons.phone_iphone,
+      'bgColor': Colors.cyan,
+      'time': 'Yesterday 09:00 PM',
+    },
+    {
+      'title': 'Salary Deposit',
       'title1': 'Salary',
       'amount': '\$5,000',
-      'icon': Icons.work,
+      'icon': Icons.account_balance_wallet,
       'bgColor': Colors.green,
       'time': 'Yesterday 06:00 PM',
     },
     {
-      'title': 'Add Income',
-      'title1': 'Salary',
-      'amount': '\$5,000',
-      'icon': Icons.work,
-      'bgColor': Colors.green,
-      'time': 'Yesterday 06:00 PM',
+      'title': 'GYM MemberShip',
+      'title1': 'Fitness',
+      'amount': '\$10',
+      'icon': Icons.fitness_center,
+      'bgColor': Colors.deepPurple,
+      'time': 'Tomorrow 02:00 PM',
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,26 +206,26 @@ class HomeScreen extends GetView<DashboardController> {
                   ],
                 ),
                 Spacing.h12,
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: transactions.length,
-              itemBuilder: (context, index) {
-                final item = transactions[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: recentTransactionList(
-                    context,
-                    title: item['title'],
-                    title1: item['title1'],
-                    amount: item['amount'],
-                    icon: item['icon'],
-                    bgColor: item['bgColor'],
-                    time: item['time'],
-                  ),
-                );
-              },
-            )
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: transactions.length,
+                  itemBuilder: (context, index) {
+                    final item = transactions[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: recentTransactionList(
+                        context,
+                        title: item['title'],
+                        title1: item['title1'],
+                        amount: item['amount'],
+                        icon: item['icon'],
+                        bgColor: item['bgColor'],
+                        time: item['time'],
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -304,9 +314,18 @@ class HomeScreen extends GetView<DashboardController> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       decoration: BoxDecoration(
-        color: context.colorScheme.onPrimary.withOpacity(0.1),
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black.withOpacity(0.1)),
+        border: Border.all(color: Colors.black.withOpacity(0.1)
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+
       ),
       child: Row(
         children: [
