@@ -11,7 +11,6 @@ import 'login_controller.dart';
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,42 +53,88 @@ class LoginScreen extends GetView<LoginController> {
                   ),
                 ),
                 Spacing.h24,
-            
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Name"),
-                ),
+
+                Align(alignment: Alignment.centerLeft, child: Text("Email")),
                 Spacing.h4,
                 AppTextField(
                   controller: controller.nameController,
-                  hintText: "Enter name",
+                  hintText: "Enter Email",
                 ),
-            
+
                 Spacing.h16,
-            
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Password"),
-                ),
+
+                Align(alignment: Alignment.centerLeft, child: Text("Password")),
                 Spacing.h4,
                 AppTextField(
                   controller: controller.passwordController,
                   hintText: "Enter password",
                   obscureText: true,
                 ),
-            
+
                 Spacing.h8,
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Forgot password?",
-                      style: context.textStyle.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
+                TextButton(
+                  onPressed: () {
+                    final emailController = TextEditingController();
+                    Get.dialog(
+                      Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text(
+                                "Reset Password",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              TextField(
+                                controller: emailController,
+                                decoration: const InputDecoration(
+                                  hintText: "Enter your email",
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextButton(
+                                    onPressed: () => Get.back(),
+                                    child: const Text("Cancel"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (emailController.text
+                                          .trim()
+                                          .isNotEmpty) {
+                                        Get.back();
+                                        Get.snackbar(
+                                          "Success",
+                                          "Reset link sent",
+                                          snackPosition: SnackPosition.BOTTOM,
+                                        );
+                                      }
+                                    },
+                                    child: const Text("Send"),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text("Forgot password?")),
                 ),
                 Spacing.h16,
                 Padding(
@@ -99,12 +144,11 @@ class LoginScreen extends GetView<LoginController> {
                     onPressed: () {
                       Get.offAllNamed(AppRoutes.dashboard);
                     },
-            
+                  ),
                 ),
-                ),
-            
+
                 Spacing.h16,
-            
+
                 Text(
                   "Quick Access",
                   textAlign: TextAlign.center,
