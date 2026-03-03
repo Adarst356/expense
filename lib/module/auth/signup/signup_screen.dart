@@ -35,32 +35,38 @@ class SignupScreen extends GetView<SignupController> {
                     child: Text("Name")
                 ),
                 Spacing.h4,
-                AppTextField(
+                Obx(() => AppTextField(
                   controller: controller.fullNameController,
                   hintText: "Enter Full name",
-                ),
+                  onChanged: controller.validateName,
+                  errorText: controller.nameError.value,
+                )),
             
                 Spacing.h16,
-            
+
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text("Email Address"),
                 ),
                 Spacing.h4,
-                AppTextField(
-                  controller: controller.passwordController,
+                Obx(() => AppTextField(
+                  controller: controller.emailController,
                   hintText: "Enter Email",
-                ),
+                  onChanged: controller.validateEmail,
+                  errorText: controller.emailError.value,
+                )),
                 Spacing.h16,
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Text("Password")
                 ),
                 Spacing.h4,
-                AppTextField(
+                Obx(() => AppTextField(
                   controller: controller.passwordController,
                   hintText: "Enter Password",
-                ),
+                  onChanged: controller.validatePassword,
+                  errorText: controller.passwordError.value,
+                )),
                 Spacing.h16,
             
                 Align(
@@ -68,14 +74,19 @@ class SignupScreen extends GetView<SignupController> {
                   child: Text("Confirm Password"),
                 ),
                 Spacing.h4,
-                AppTextField(
-                  controller: controller.passwordController,
+                Obx(() => AppTextField(
+                  controller: controller.confirmPasswordController,
                   hintText: "Enter Confirm Password",
-                ),
+                  onChanged: controller.validateConfirmPassword,
+                  errorText: controller.confirmPasswordError.value,
+                )),
                 Spacing.h24,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: AppButton(text: "Create Account", onPressed: () {}),
+                  child: AppButton(
+                    text: "Create Account",
+                    onPressed: controller.submit,
+                  ),
                 ),
                 Spacing.h24,
                 Row(

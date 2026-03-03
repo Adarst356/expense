@@ -17,8 +17,6 @@ class DashboardController extends GetxController with WidgetsBindingObserver {
   final Rxn<DateTime> selectedDate = Rxn<DateTime>();
 
 
-  @override
-
   void select(int index) {
     selectedIndex.value = index;
   }

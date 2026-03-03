@@ -47,7 +47,11 @@ class LoginScreen extends GetView<LoginController> {
                 Text(
                   "Login to manage your finance",
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(
                     color: context.colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.normal,
                   ),
@@ -56,20 +60,36 @@ class LoginScreen extends GetView<LoginController> {
 
                 Align(alignment: Alignment.centerLeft, child: Text("Email")),
                 Spacing.h4,
-                AppTextField(
-                  controller: controller.nameController,
-                  hintText: "Enter Email",
-                ),
+                Obx(() {
+                  return AppTextField(
+                    controller: controller.emailController,
+                    hintText: "Enter your email",
+                    onChanged: controller.validateEmail,
+                    errorText: controller.emailError.value,
+                  );
+                }),
 
                 Spacing.h16,
 
                 Align(alignment: Alignment.centerLeft, child: Text("Password")),
                 Spacing.h4,
-                AppTextField(
-                  controller: controller.passwordController,
-                  hintText: "Enter password",
-                  obscureText: true,
-                ),
+                Obx(() {
+                  return AppTextField(
+                    controller: controller.passwordController,
+                    hintText: "Enter password",
+                    obscureText: controller.obscureText.value,
+                    onChanged: controller.validatePassword,
+                    errorText: controller.passwordError.value,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        controller.obscureText.value
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                      onPressed: controller.togglePassword,
+                    ),
+                  );
+                }),
 
                 Spacing.h8,
                 TextButton(
@@ -103,7 +123,7 @@ class LoginScreen extends GetView<LoginController> {
                               const SizedBox(height: 16),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextButton(
                                     onPressed: () => Get.back(),
@@ -139,12 +159,10 @@ class LoginScreen extends GetView<LoginController> {
                 Spacing.h16,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: AppButton(
-                    text: "Login",
-                    onPressed: () {
-                      Get.offAllNamed(AppRoutes.dashboard);
-                    },
-                  ),
+                  child: Obx(() => AppButton(
+                    text: controller.isLoading.value ? "Please wait..." : "Login",
+                    onPressed: controller.isLoading.value ? null : controller.login,
+                  ))
                 ),
 
                 Spacing.h16,

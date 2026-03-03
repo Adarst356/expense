@@ -13,10 +13,11 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-        () => IndexedStack(
-          index: controller.currentIndex.value,
-          children: controller.pages,
-        ),
+            () =>
+            IndexedStack(
+              index: controller.currentIndex.value,
+              children: controller.pages,
+            ),
       ),
 
       floatingActionButton: FloatingActionButton(
@@ -31,61 +32,60 @@ class DashboardScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       bottomNavigationBar: Obx(
-        () => BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          notchMargin: 10,
-          child: SizedBox(
-            height: 70,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _navItem(context, Icons.home, "Home", 0),
-                _navItem(
-                  context,
-                  Icons.account_balance_wallet_rounded,
-                  "Budget",
-                  1,
+            () =>
+            BottomAppBar(
+              shape: CircularNotchedRectangle(),
+              notchMargin: 10,
+              child: SizedBox(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _navItem(context, Icons.home, "Home", 0),
+                    _navItem(
+                      context,
+                      Icons.account_balance_wallet_rounded,
+                      "Budget",
+                      1,
+                    ),
+                    Spacing.w32,
+                    _navItem(context, Icons.history, "History", 3),
+                    _navItem(context, Icons.settings, "Profile", 4),
+                  ],
                 ),
-                Spacing.w32,
-                _navItem(context, Icons.history, "History", 3),
-                _navItem(context, Icons.settings, "Profile", 4),
-              ],
+              ),
             ),
-          ),
-        ),
       ),
     );
   }
 
-  Widget _navItem(
-    BuildContext context,
-    IconData icon,
-    String label,
-    int index,
-  ) {
+  Widget _navItem(BuildContext context,
+      IconData icon,
+      String label,
+      int index,) {
     final isSelected = controller.currentIndex.value == index;
-    return InkWell(
-      onTap: () => controller.changeIndex(index),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: isSelected
-                ? context.colorScheme.primary
-                : context.colorScheme.onSurfaceVariant,
-          ),
-          Text(
-            label,
-            style: context.textStyle.bodySmall?.copyWith(
+    return GestureDetector(
+        onTap: () => controller.changeIndex(index),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
               color: isSelected
                   ? context.colorScheme.primary
                   : context.colorScheme.onSurfaceVariant,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
             ),
-          ),
-        ],
-      ),
+            Text(
+              label,
+              style: context.textStyle.bodySmall?.copyWith(
+                color: isSelected
+                    ? context.colorScheme.primary
+                    : context.colorScheme.onSurfaceVariant,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+              ),
+            ),
+          ],
+        )
     );
   }
 }

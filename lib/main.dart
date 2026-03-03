@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
-  Supabase.initialize(
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
     url: baseUrls,
     anonKey: anonKey,
   );
+
   runApp(const MyApp());
 }
 
