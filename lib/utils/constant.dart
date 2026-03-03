@@ -1,0 +1,2 @@
+const baseUrls ="https://xvvaxuxplvbmyeacbcnb.supabase.co";
+const anonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh2dmF4dXhwbHZibXllYWNiY25iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1MDkwOTUsImV4cCI6MjA4ODA4NTA5NX0.us2sMaZasKbtWgGgFPErbtZn9-A1vxLwvd8EYQNJwLg";

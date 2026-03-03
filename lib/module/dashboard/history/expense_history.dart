@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../utils/extensions.dart';
 import '../../../utils/spacing.dart';
@@ -34,146 +35,164 @@ class ExpenseHistory extends GetView<DashboardController> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: incomeExpense(
-                      context,
-                      title: "INCOME",
-                      amount: "+\$ 2,000.00",
-                      icon: Icons.arrow_downward,
-                      bgColor: Colors.green,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: incomeExpense(
+                        context,
+                        title: "INCOME",
+                        amount: "+\$ 2,000.00",
+                        icon: Icons.arrow_downward,
+                        bgColor: Colors.green,
+                      ),
                     ),
-                  ),
-                  Spacing.w12,
-                  Expanded(
-                    child: incomeExpense(
-                      context,
-                      title: "EXPENSE",
-                      amount: "-\$ 750.00",
-                      icon: Icons.arrow_upward,
-                      bgColor: Colors.red,
+                    Spacing.w12,
+                    Expanded(
+                      child: incomeExpense(
+                        context,
+                        title: "EXPENSE",
+                        amount: "-\$ 750.00",
+                        icon: Icons.arrow_upward,
+                        bgColor: Colors.red,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: context.colorScheme.surfaceContainer,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.calendar_month,
-                            color: context.colorScheme.onPrimaryContainer,
-                          ),
-                          Spacing.w8,
-                          Text("October 2023"),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: context.colorScheme.onPrimaryContainer,
-                          ),
-                        ],
+              Obx(
+                () => GestureDetector(
+                  onTap: () => controller.selectMonthYear(context),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: context.colorScheme.surfaceContainer,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.calendar_month,
+                              color: context.colorScheme.onPrimaryContainer,
+                            ),
+                            Spacing.w8,
+                            Text(
+                              controller.selectedDate.value == null
+                                  ? "Select Month"
+                                  : DateFormat(
+                                      'MMMM yyyy',
+                                    ).format(controller.selectedDate.value!),
+                            ),
+                            Spacing.w4,
+                            Icon(
+                              Icons.arrow_drop_down,
+                              color: context.colorScheme.onPrimaryContainer,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  Spacing.w12,
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundColor: context.colorScheme.onPrimary,
-                    foregroundColor: context.colorScheme.onPrimaryContainer,
-                    child: const Icon(Icons.tune),
-                  ),
-                ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 44,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: expenseCategories.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 8),
+              SizedBox(
+                height: 44,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: expenseCategories.length,
+                  separatorBuilder: (_, _) => const SizedBox(width: 8),
+                  itemBuilder: (context, index) {
+                    final month = expenseCategories[index];
+                    return Obx(() {
+                      final isSelected =
+                          controller.selectedIndex.value == index;
+                      return budgetMonth(
+                        context,
+                        title: month,
+                        isSelected: isSelected,
+                        onTap: () => controller.select(index),
+                      );
+                    });
+                  },
+                ),
+              ),
+              Spacing.h12,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 8.0,
+                ),
+                child: Text(
+                  "TODAY",
+                  style: context.textStyle.labelMedium?.copyWith(
+                    letterSpacing: 1.2,
+                    fontSize: 14,
+                    color: context.colorScheme.onSurfaceVariant.withOpacity(
+                      0.7,
+                    ),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+
+              ListView.builder(
+                itemCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final month = expenseCategories[index];
-                  return Obx(() {
-                    final isSelected = controller.selectedIndex.value == index;
-                    return budgetMonth(
-                      context,
-                      title: month,
-                      isSelected: isSelected,
-                      onTap: () => controller.select(index),
-                    );
-                  });
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: transactionTile(context),
+                  );
                 },
               ),
-            ),
-            Spacing.h12,
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 8.0),
-              child: Text(
-                "TODAY",
-                style: context.textStyle.labelMedium?.copyWith(
-                  letterSpacing: 1.2,
-                  fontSize: 14,
-                  color: context.colorScheme.onSurfaceVariant.withOpacity(0.7),
-                  fontWeight: FontWeight.w500,
+              Spacing.h12,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 8.0,
+                ),
+                child: Text(
+                  "YESTERDAY",
+                  style: context.textStyle.labelMedium?.copyWith(
+                    letterSpacing: 1.2,
+                    fontSize: 14,
+                    color: context.colorScheme.onSurfaceVariant.withOpacity(
+                      0.7,
+                    ),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-        
-            ListView.builder(
-              itemCount: 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: transactionTile(context),
-                );
-            },),
-            Spacing.h12,
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 8.0),
-              child: Text(
-                "YESTERDAY",
-                style: context.textStyle.labelMedium?.copyWith(
-                  letterSpacing: 1.2,
-                  fontSize: 14,
-                  color: context.colorScheme.onSurfaceVariant.withOpacity(0.7),
-                  fontWeight: FontWeight.w500,
-                ),
+              ListView.builder(
+                itemCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: transactionTile(context),
+                  );
+                },
               ),
-            ),
-            ListView.builder(
-              itemCount: 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: transactionTile(context),
-                );
-              },
-            ),
-          ],
+              Spacing.h60,
+            ],
+          ),
         ),
       ),
-
     );
   }
 

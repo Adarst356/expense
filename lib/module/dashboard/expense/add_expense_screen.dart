@@ -31,74 +31,76 @@ class AddExpenseScreen extends GetView<DashboardController> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Spacing.h24,
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: totalAmountField(context),
-            ),
-            Spacing.h16,
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Icon(Icons.category, color: context.colorScheme.primary),
-                  Spacing.w4,
-                  Text("Category", style: context.textStyle.titleMedium),
-                ],
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Spacing.h24,
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: totalAmountField(context),
               ),
-            ),
-            Obx(() {
-              return categoryDropdownField(
-                context,
-                value: controller.selectedCategory.value,
-                items: categories,
-                onChanged: (val) {
-                  controller.selectedCategory.value = val;
-                },
-              );
-            }),
-        
-            Padding(
-              padding: const EdgeInsets.all(6),
-              child: Row(
-                children: [
-                  Icon(Icons.date_range, color: context.colorScheme.primary),
-                  Spacing.w4,
-                  Text("Date", style: context.textStyle.titleMedium),
-                ],
-              ),
-            ),
-            dateField(context),
-            Spacing.h8,
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text("Note", style: context.textStyle.titleMedium),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Container(
-                height: 120,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: context.colorScheme.onSurfaceVariant.withOpacity(0.2),
-                  ),
+              Spacing.h16,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.category, color: context.colorScheme.primary),
+                    Spacing.w4,
+                    Text("Category", style: context.textStyle.titleMedium),
+                  ],
                 ),
-                child: TextField(
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    isDense: true,
-                    hintText: "Add a note",
-                  ),
-                )
               ),
-            )
-          ],
+              Obx(() {
+                return categoryDropdownField(
+                  context,
+                  value: controller.selectedCategory.value,
+                  items: categories,
+                  onChanged: (val) {
+                    controller.selectedCategory.value = val;
+                  },
+                );
+              }),
+          
+              Padding(
+                padding: const EdgeInsets.all(6),
+                child: Row(
+                  children: [
+                    Icon(Icons.date_range, color: context.colorScheme.primary),
+                    Spacing.w4,
+                    Text("Date", style: context.textStyle.titleMedium),
+                  ],
+                ),
+              ),
+              dateField(context),
+              Spacing.h8,
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text("Note", style: context.textStyle.titleMedium),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Container(
+                  height: 120,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: context.colorScheme.onSurfaceVariant.withOpacity(0.2),
+                    ),
+                  ),
+                  child: TextField(
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      isDense: true,
+                      hintText: "Add a note",
+                    ),
+                  )
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

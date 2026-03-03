@@ -123,192 +123,194 @@ class BudgetPlannerScreen extends GetView<DashboardController> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Spacing.h24,
-            SizedBox(
-              height: 44,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: months.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 8),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Spacing.h24,
+              SizedBox(
+                height: 44,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: months.length,
+                  separatorBuilder: (_, _) => const SizedBox(width: 8),
+                  itemBuilder: (context, index) {
+                    final month = months[index];
+                    return Obx(() {
+                      final isSelected = controller.selectedIndex.value == index;
+                      return budgetMonth(
+                        context,
+                        title: month,
+                        isSelected: isSelected,
+                        onTap: () => controller.select(index),
+                      );
+                    });
+                  },
+                ),
+              ),
+              Spacing.h12,
+              totalRemainingCard(context),
+              Spacing.h12,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Categories",
+                      style: context.textStyle.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: Icon(
+                              Icons.add,
+                              size: 16,
+                              color: context.colorScheme.primary,
+                            ),
+                          ),
+                          const WidgetSpan(child: SizedBox(width: 4)),
+                          TextSpan(
+                            text: "Add Category",
+                            style: context.textStyle.bodyMedium?.copyWith(
+                              color: context.colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Spacing.h12,
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  final month = months[index];
-                  return Obx(() {
-                    final isSelected = controller.selectedIndex.value == index;
-                    return budgetMonth(
+                  final item = categories[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: categoryList(
                       context,
-                      title: month,
-                      isSelected: isSelected,
-                      onTap: () => controller.select(index),
-                    );
-                  });
+                      title: item['title'],
+                      title1: item['limit'],
+                      amount: item['amount'],
+                      icon: item['icon'],
+                      bgColor: item['bgColor'],
+                      time: item['offer'],
+                    ),
+                  );
                 },
               ),
-            ),
-            Spacing.h12,
-            totalRemainingCard(context),
-            Spacing.h12,
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Categories",
-                    style: context.textStyle.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+              Spacing.h16,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Financial Goals",
+                  style: context.textStyle.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: Icon(
-                            Icons.add,
-                            size: 16,
-                            color: context.colorScheme.primary,
-                          ),
-                        ),
-                        const WidgetSpan(child: SizedBox(width: 4)),
-                        TextSpan(
-                          text: "Add Category",
-                          style: context.textStyle.bodyMedium?.copyWith(
-                            color: context.colorScheme.primary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                ),
+              ),
+              Spacing.h12,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFF0F172A),
+                        Color(0xFF1E3A8A)
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Spacing.h12,
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: categories.length,
-              itemBuilder: (context, index) {
-                final item = categories[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: categoryList(
-                    context,
-                    title: item['title'],
-                    title1: item['limit'],
-                    amount: item['amount'],
-                    icon: item['icon'],
-                    bgColor: item['bgColor'],
-                    time: item['offer'],
-                  ),
-                );
-              },
-            ),
-            Spacing.h16,
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Financial Goals",
-                style: context.textStyle.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Spacing.h12,
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFF0F172A),
-                      Color(0xFF1E3A8A)
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
+                      ),
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
-                      blurRadius: 12,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: 52,
-                      width: 52,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          CircularProgressIndicator(
-                            value: 0.72,
-                            strokeWidth: 5,
-                            backgroundColor: Colors.white.withOpacity(0.15),
-                            valueColor: const AlwaysStoppedAnimation(
-                              Colors.blueAccent,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        height: 52,
+                        width: 52,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                              value: 0.72,
+                              strokeWidth: 5,
+                              backgroundColor: Colors.white.withOpacity(0.15),
+                              valueColor: const AlwaysStoppedAnimation(
+                                Colors.blueAccent,
+                              ),
                             ),
-                          ),
-                          const Text(
-                            "72%",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12,
+                            const Text(
+                              "72%",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-
-                    Spacing.w12,
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "New MacBook Pro",
-                            style: context.textStyle.titleMedium?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
+          
+                      Spacing.w12,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "New MacBook Pro",
+                              style: context.textStyle.titleMedium?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          Spacing.h4,
-                          Text(
-                            "\$1,800 of \$2,500 saved",
-                            style: context.textStyle.bodySmall?.copyWith(
-                              color: Colors.white.withOpacity(0.7),
+                            Spacing.h4,
+                            Text(
+                              "\$1,800 of \$2,500 saved",
+                              style: context.textStyle.bodySmall?.copyWith(
+                                color: Colors.white.withOpacity(0.7),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: Colors.white.withOpacity(0.15),
-                      child: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: Colors.white,
+          
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Colors.white.withOpacity(0.15),
+                        child: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Spacing.h24,
-          ],
+              Spacing.h24,
+            ],
+          ),
         ),
       ),
     );

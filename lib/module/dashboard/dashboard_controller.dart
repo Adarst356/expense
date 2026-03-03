@@ -47,8 +47,8 @@ class DashboardController extends GetxController with WidgetsBindingObserver {
     final picked = await showDatePicker(
       context: context,
       initialDate: selectedDate.value ?? DateTime(2026, 1, 1),
-      firstDate: DateTime(2026, 1, 1),   // ❌ Previous years blocked
-      lastDate: DateTime(2030, 12, 31),  // ✅ Future limit (change as needed)
+      firstDate: DateTime(2026, 1, 1),   ///Previous years blocked
+      lastDate: DateTime(2030, 12, 31),  /// Future limit (change as needed)
       helpText: "Select Date",
       cancelText: "Cancel",
       confirmText: "Select",
@@ -56,6 +56,22 @@ class DashboardController extends GetxController with WidgetsBindingObserver {
 
     if (picked != null) {
       selectedDate.value = picked;
+    }
+  }
+
+  Future<void> selectMonthYear(BuildContext context) async {
+    final now = DateTime.now();
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate.value ?? now,
+      firstDate: DateTime(now.year, 1, 1),   ///Current year se start
+      lastDate: DateTime(now.year + 5, 12, 31), /// future limit (change if needed)
+      initialDatePickerMode: DatePickerMode.year,
+    );
+
+    if (picked != null) {
+      selectedDate.value = picked; /// GetX update
     }
   }
 }

@@ -193,7 +193,7 @@ class SettingScreen extends StatelessWidget {
               ),
               Spacing.h24,
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: SizedBox(
                   width: double.infinity,
                   height: 48,
