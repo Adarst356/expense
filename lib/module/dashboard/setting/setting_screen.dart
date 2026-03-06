@@ -1,6 +1,8 @@
+import 'package:expense/routes/app_routes.dart';
 import 'package:expense/utils/extensions.dart';
 import 'package:expense/utils/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -57,13 +59,18 @@ class SettingScreen extends StatelessWidget {
               ),
               Spacing.h12,
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 8.0,
+                ),
                 child: Text(
                   "PREFERENCES",
                   style: context.textStyle.labelMedium?.copyWith(
                     letterSpacing: 1.2,
                     fontSize: 14,
-                    color: context.colorScheme.onSurfaceVariant.withOpacity(0.7),
+                    color: context.colorScheme.onSurfaceVariant.withOpacity(
+                      0.7,
+                    ),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -91,7 +98,7 @@ class SettingScreen extends StatelessWidget {
                           foregroundColor: context.colorScheme.primary,
                           backgroundColor: context.colorScheme.onPrimary,
                           child: Icon(Icons.currency_exchange),
-                  ),
+                        ),
                         title: Text(
                           "Currency",
                           style: context.textStyle.titleMedium,
@@ -131,13 +138,18 @@ class SettingScreen extends StatelessWidget {
               ),
               Spacing.h8,
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 8.0,
+                ),
                 child: Text(
                   "ABOUT",
                   style: context.textStyle.labelMedium?.copyWith(
                     letterSpacing: 1.2,
                     fontSize: 14,
-                    color: context.colorScheme.onSurfaceVariant.withOpacity(0.7),
+                    color: context.colorScheme.onSurfaceVariant.withOpacity(
+                      0.7,
+                    ),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -165,7 +177,7 @@ class SettingScreen extends StatelessWidget {
                           foregroundColor: context.colorScheme.primary,
                           backgroundColor: context.colorScheme.onPrimary,
                           child: Icon(Icons.privacy_tip),
-                  ),
+                        ),
                         title: Text(
                           "Privacy Policy",
                           style: context.textStyle.titleMedium,
@@ -206,7 +218,7 @@ class SettingScreen extends StatelessWidget {
                       elevation: 2,
                     ),
                     onPressed: () {
-          
+                      showLogoutDialog();
                     },
                     child: Text(
                       "Log Out",
@@ -219,11 +231,36 @@ class SettingScreen extends StatelessWidget {
                 ),
               ),
               Spacing.h16,
-
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void showLogoutDialog() {
+    Get.defaultDialog(
+      title: "Logout",
+      titleStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      middleText: "Are you sure you want to logout?",
+      middleTextStyle: const TextStyle(fontSize: 16),
+      radius: 12,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+
+      textCancel: "No",
+      textConfirm: "Yes",
+
+      cancelTextColor: Colors.black,
+      confirmTextColor: Colors.white,
+
+      buttonColor: Colors.red,
+
+      onCancel: () {
+        Get.back();
+      },
+      onConfirm: () {
+        Get.offAllNamed(AppRoutes.loginScreen);
+      },
     );
   }
 }

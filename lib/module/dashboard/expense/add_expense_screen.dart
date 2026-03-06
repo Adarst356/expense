@@ -61,7 +61,7 @@ class AddExpenseScreen extends GetView<DashboardController> {
                   },
                 );
               }),
-          
+
               Padding(
                 padding: const EdgeInsets.all(6),
                 child: Row(
@@ -86,7 +86,9 @@ class AddExpenseScreen extends GetView<DashboardController> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: context.colorScheme.onSurfaceVariant.withOpacity(0.2),
+                      color: context.colorScheme.onSurfaceVariant.withOpacity(
+                        0.2,
+                      ),
                     ),
                   ),
                   child: TextField(
@@ -96,9 +98,9 @@ class AddExpenseScreen extends GetView<DashboardController> {
                       isDense: true,
                       hintText: "Add a note",
                     ),
-                  )
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -4,10 +4,16 @@ import 'package:expense/module/dashboard/setting/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../commons/ui_states.dart';
+import 'data/model/transaction_model.dart';
+import 'data/repo/transaction_repo.dart';
 import 'history/expense_history.dart';
 import 'home/home_screen.dart';
 
 class DashboardController extends GetxController with WidgetsBindingObserver {
+  final repo = DashboardRepo();
+  final transactionsListState = UiState<List<TransactionModel>>.none().obs;
+
   var currentIndex = 0.obs;
   var selectedTab = 0.obs;
   final selectedIndex = 0.obs; // 0=DAY, 1=WEEK, 2=MONTH
@@ -72,4 +78,16 @@ class DashboardController extends GetxController with WidgetsBindingObserver {
       selectedDate.value = picked; /// GetX update
     }
   }
+  @override
+  void onInit() {
+    getTransactions();
+    super.onInit();
+  }
+  void getTransactions() {
+    repo.getTransactions((state) {
+      transactionsListState.value = state;
+    });
+  }
+
+
 }

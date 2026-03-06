@@ -316,8 +316,7 @@ class HomeScreen extends GetView<DashboardController> {
       decoration: BoxDecoration(
         color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black.withOpacity(0.1)
-        ),
+        border: Border.all(color: Colors.black.withOpacity(0.1)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -325,7 +324,6 @@ class HomeScreen extends GetView<DashboardController> {
             offset: const Offset(0, 4),
           ),
         ],
-
       ),
       child: Row(
         children: [

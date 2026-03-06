@@ -10,16 +10,18 @@ class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final forgotMobileController = TextEditingController();
+  final resetPasswordController = TextEditingController();
+
   final supabase = Supabase.instance.client;
   var isLoading = false.obs;
   var emailError = RxnString();
   var passwordError = RxnString();
-
   var obscureText = true.obs;
 
   void togglePassword() {
     obscureText.value = !obscureText.value;
   }
+
   Future<void> login() async {
     if (!validateForm()) return;
 
@@ -44,6 +46,7 @@ class LoginController extends GetxController {
       isLoading.value = false;
     }
   }
+
   void validateEmail(String value) {
     if (value.isEmpty) {
       emailError.value = "Please enter your email";
@@ -67,9 +70,23 @@ class LoginController extends GetxController {
   bool validateForm() {
     validateEmail(emailController.text);
     validatePassword(passwordController.text);
-
     return emailError.value == null &&
         passwordError.value == null;
+  }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await supabase.auth.resetPasswordForEmail(
+        email,
+        redirectTo: 'io.supabase.flutter://reset-callback',
+      );
+
+      Get.showSuccess("Password reset link sent to email");
+    } on AuthException catch (e) {
+      Get.showError(e.message);
+    } catch (e) {
+      Get.showError("Something went wrong");
+    }
   }
 
   @override
@@ -77,6 +94,7 @@ class LoginController extends GetxController {
     emailController.dispose();
     passwordController.dispose();
     forgotMobileController.dispose();
+    resetPasswordController.dispose();
     super.onClose();
   }
 }

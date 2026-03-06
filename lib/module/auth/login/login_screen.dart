@@ -47,11 +47,7 @@ class LoginScreen extends GetView<LoginController> {
                 Text(
                   "Login to manage your finance",
                   textAlign: TextAlign.center,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
                     color: context.colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.normal,
                   ),
@@ -94,7 +90,6 @@ class LoginScreen extends GetView<LoginController> {
                 Spacing.h8,
                 TextButton(
                   onPressed: () {
-                    final emailController = TextEditingController();
                     Get.dialog(
                       Dialog(
                         shape: RoundedRectangleBorder(
@@ -112,18 +107,18 @@ class LoginScreen extends GetView<LoginController> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              Spacing.h12,
                               TextField(
-                                controller: emailController,
+                                controller: controller.resetPasswordController,
                                 decoration: const InputDecoration(
                                   hintText: "Enter your email",
                                   border: OutlineInputBorder(),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              Spacing.h16,
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   TextButton(
                                     onPressed: () => Get.back(),
@@ -131,15 +126,18 @@ class LoginScreen extends GetView<LoginController> {
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
-                                      if (emailController.text
+                                      if (controller
+                                          .resetPasswordController
+                                          .text
                                           .trim()
                                           .isNotEmpty) {
-                                        Get.back();
-                                        Get.snackbar(
-                                          "Success",
-                                          "Reset link sent",
-                                          snackPosition: SnackPosition.BOTTOM,
+                                        controller.resetPassword(
+                                          controller
+                                              .resetPasswordController
+                                              .text
+                                              .trim(),
                                         );
+                                        Get.back();
                                       }
                                     },
                                     child: const Text("Send"),
@@ -153,16 +151,23 @@ class LoginScreen extends GetView<LoginController> {
                     );
                   },
                   child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text("Forgot password?")),
+                    alignment: Alignment.centerRight,
+                    child: Text("Forgot password?"),
+                  ),
                 ),
                 Spacing.h16,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Obx(() => AppButton(
-                    text: controller.isLoading.value ? "Please wait..." : "Login",
-                    onPressed: controller.isLoading.value ? null : controller.login,
-                  ))
+                  child: Obx(
+                    () => AppButton(
+                      text: controller.isLoading.value
+                          ? "Please wait..."
+                          : "Login",
+                      onPressed: controller.isLoading.value
+                          ? null
+                          : controller.login,
+                    ),
+                  ),
                 ),
 
                 Spacing.h16,

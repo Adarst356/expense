@@ -138,7 +138,8 @@ class BudgetPlannerScreen extends GetView<DashboardController> {
                   itemBuilder: (context, index) {
                     final month = months[index];
                     return Obx(() {
-                      final isSelected = controller.selectedIndex.value == index;
+                      final isSelected =
+                          controller.selectedIndex.value == index;
                       return budgetMonth(
                         context,
                         title: month,
@@ -174,7 +175,7 @@ class BudgetPlannerScreen extends GetView<DashboardController> {
                               color: context.colorScheme.primary,
                             ),
                           ),
-                          const WidgetSpan(child: SizedBox(width: 4)),
+                          const WidgetSpan(child: Spacing.w4),
                           TextSpan(
                             text: "Add Category",
                             style: context.textStyle.bodyMedium?.copyWith(
@@ -229,10 +230,7 @@ class BudgetPlannerScreen extends GetView<DashboardController> {
                     gradient: const LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFF0F172A),
-                        Color(0xFF1E3A8A)
-                      ],
+                      colors: [Color(0xFF0F172A), Color(0xFF1E3A8A)],
                     ),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
@@ -270,7 +268,7 @@ class BudgetPlannerScreen extends GetView<DashboardController> {
                           ],
                         ),
                       ),
-          
+
                       Spacing.w12,
                       Expanded(
                         child: Column(
@@ -294,7 +292,7 @@ class BudgetPlannerScreen extends GetView<DashboardController> {
                           ],
                         ),
                       ),
-          
+
                       CircleAvatar(
                         radius: 18,
                         backgroundColor: Colors.white.withOpacity(0.15),
